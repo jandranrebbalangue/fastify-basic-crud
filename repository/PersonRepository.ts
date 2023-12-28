@@ -39,7 +39,10 @@ export async function findPeople(criteria: Partial<Person>) {
   return await query.selectAll().execute()
 }
 
-export async function updatePerson(id: number, updateWith: PersonUpdate) {
+export async function updatePerson(
+  id: number,
+  updateWith: PersonUpdate & { updated_at: string }
+) {
   await db.updateTable("person").set(updateWith).where("id", "=", id).execute()
 }
 

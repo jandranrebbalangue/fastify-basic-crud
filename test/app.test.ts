@@ -19,7 +19,7 @@ test("request the '/' route", async (t) => {
 
 test("Person", async (t) => {
   const items: Person[] = []
-  t.test("Create Person", async (t) => {
+  t.test("Create", async (t) => {
     const promises: Promise<Response>[] = []
     persons.forEach((item) => {
       promises.push(
@@ -39,7 +39,7 @@ test("Person", async (t) => {
     })
   })
 
-  t.test("Read Person", async (t) => {
+  t.test("Read", async (t) => {
     const { id } = items[0]
     const response = await app.inject({
       method: "GET",
@@ -48,5 +48,38 @@ test("Person", async (t) => {
 
     t.equal(response.statusCode, 200)
     t.ok(response.json().data, items[0])
+  })
+
+  t.test("Update", async (t) => {
+    const { id, first_name, last_name, gender, email } = items[0]
+    const response = await app.inject({
+      method: "PUT",
+      url: `/persons/${id}`,
+      body: {
+        Age: 20,
+        FirstName: first_name,
+        LastName: last_name,
+        Email: email,
+        Gender: gender,
+        updatedAt: new Date().toISOString()
+      }
+    })
+
+    const person = await app.inject({
+      method: "GET",
+      url: `/persons/${id}`
+    })
+    t.equal(response.statusCode, 204)
+    t.ok(person.json().data.age, "20")
+  })
+
+  t.test("Delete", async (t) => {
+    const { id } = items[1]
+    const response = await app.inject({
+      method: "DELETE",
+      url: `/persons/${id}`
+    })
+
+    t.equal(response.statusCode, 204)
   })
 })
