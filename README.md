@@ -1,1 +1,1 @@
-# practice-fastify-ts
+# CRUD API for practice purpose only
