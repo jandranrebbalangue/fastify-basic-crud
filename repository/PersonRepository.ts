@@ -13,7 +13,7 @@ export async function findPeople(criteria: Partial<Person>) {
   let query = db.selectFrom("person")
 
   if (criteria.id) {
-    query = query.where("id", "=", criteria.id) // Kysely is immutable, you must re-assign!
+    query = query.where("id", "=", criteria.id)
   }
 
   if (criteria.first_name) {
