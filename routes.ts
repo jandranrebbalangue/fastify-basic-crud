@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyPluginOptions } from "fastify"
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox"
 import { Type } from "@sinclair/typebox"
-import { createPerson } from "./repository"
+import { createPerson, findPersonById } from "./repository"
 import { NewPerson } from "./db/types"
 
 export async function pluginWithTypebox(
@@ -43,7 +43,22 @@ export async function pluginWithTypebox(
       }
 
       const person = await createPerson(data)
-      reply.code(201).send({ id: person.id })
+      reply.code(201).send(person)
+    }
+  )
+  provider.get(
+    "/persons/:personId",
+    {
+      schema: {
+        params: Type.Object({
+          personId: Type.Number()
+        })
+      }
+    },
+    async (req, res) => {
+      const { personId } = req.params
+      const person = await findPersonById(personId)
+      res.code(200).send({ data: person })
     }
   )
 }
