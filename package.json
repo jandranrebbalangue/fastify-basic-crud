@@ -2,16 +2,20 @@
   "name": "practice-fastify-ts",
   "packageManager": "yarn@4.0.1",
   "scripts": {
-    "dev": "tsx watch ./server.ts"
+    "dev": "tsx watch ./server.ts",
+    "start:db": " docker-compose -p postgres up -d"
   },
   "devDependencies": {
     "@sinclair/typebox": "^0.32.3",
     "@types/node": "^20.10.5",
+    "@types/pg": "^8",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@fastify/postgres": "^5.2.2",
     "@fastify/type-provider-typebox": "^3.5.0",
-    "fastify": "^4.25.2"
+    "fastify": "^4.25.2",
+    "pg": "^8.11.3"
   }
 }

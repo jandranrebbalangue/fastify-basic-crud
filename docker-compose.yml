@@ -1,0 +1,21 @@
+version: "3.1"
+
+services:
+  pgadmin:
+    image: dpage/pgadmin4:6.21
+    container_name: pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=root@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=5050
+    ports:
+      - "5050:5050"
+  postgres:
+    image: postgres:15.5
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=admin
+    ports:
+      - "8080:8080"

@@ -6,13 +6,7 @@ export async function pluginWithTypebox(
   fastify: FastifyInstance,
   _opts: FastifyPluginOptions,
 ): Promise<void> {
-  fastify.withTypeProvider<TypeBoxTypeProvider>().get(
-    "/",
-    {
-      schema: {},
-    },
-    (req, reply) => {
-      reply.send({ Hello: "World" });
-    },
-  );
+  fastify.withTypeProvider<TypeBoxTypeProvider>().get("/", (req, reply) => {
+    reply.send({ Hello: "World" });
+  });
 }
