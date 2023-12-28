@@ -7,7 +7,7 @@ export interface Database {
 export interface PersonTable {
   id: Generated<number>
   first_name: string
-  gender: string
+  gender: "male" | "woman" | "other"
   email: string
   age: number
   last_name: string

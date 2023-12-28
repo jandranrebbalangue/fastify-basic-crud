@@ -16,6 +16,5 @@ services:
     restart: always
     environment:
       - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=admin
     ports:
-      - "8080:8080"
+      - "5432:5432"

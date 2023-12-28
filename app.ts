@@ -1,8 +1,7 @@
-import { fastifyEnv } from "@fastify/env"
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox"
 import fastify from "fastify"
 import http from "http"
-import { fastifyPostgres } from "@fastify/postgres"
+import { fastifyEnv } from "@fastify/env"
 import { pluginWithTypebox } from "./routes"
 
 interface customRequest extends http.IncomingMessage { }
@@ -49,9 +48,6 @@ const options = {
 }
 app.register(fastifyEnv, options).ready((err) => {
   if (err) console.error(err)
-})
-app.register(fastifyPostgres, {
-  connectionString: process.env.DATABASE_URL
 })
 
 app.register(pluginWithTypebox)

@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyPluginOptions } from "fastify"
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox"
-import { Date, Type } from "@sinclair/typebox"
+import { Type } from "@sinclair/typebox"
 import { createPerson } from "./repository"
 import { NewPerson } from "./db/types"
 
@@ -9,7 +9,7 @@ export async function pluginWithTypebox(
   _opts: FastifyPluginOptions
 ): Promise<void> {
   const provider = fastify.withTypeProvider<TypeBoxTypeProvider>()
-  provider.get("/", (req, reply) => {
+  provider.get("/", (_req, reply) => {
     reply.send({ Hello: "World" })
   })
 
@@ -22,21 +22,28 @@ export async function pluginWithTypebox(
           LastName: Type.String(),
           Age: Type.Number(),
           Email: Type.String(),
-          Gender: Type.String()
+          Gender: Type.Enum({
+            male: "male",
+            woman: "woman",
+            other: "other"
+          })
         })
       }
     },
     async (req, reply) => {
       const { FirstName, LastName, Age, Email, Gender } = req.body
+      const created_at = new Date().toISOString()
       const data: NewPerson = {
         first_name: FirstName,
         last_name: LastName,
         age: Age,
         email: Email,
-        gender: Gender
+        gender: Gender,
+        created_at
       }
+
       const person = await createPerson(data)
-      reply.send({ id: person.id }).code(201)
+      reply.code(201).send({ id: person.id })
     }
   )
 }

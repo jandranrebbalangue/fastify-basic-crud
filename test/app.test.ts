@@ -1,5 +1,10 @@
-import { test } from "tap"
+import { test, t } from "tap"
 import app from "../app"
+import { db } from "../db"
+
+t.beforeEach(async () => {
+  await db.deleteFrom("person").returningAll().executeTakeFirst()
+})
 
 test("request the '/' route", async (t) => {
   const response = await app.inject({
@@ -9,7 +14,7 @@ test("request the '/' route", async (t) => {
   t.equal(response.statusCode, 200)
 })
 
-test("create new data", async (t) => {
+test("create Person", async (t) => {
   const response = await app.inject({
     method: "POST",
     url: "/persons",
@@ -21,7 +26,5 @@ test("create new data", async (t) => {
       Gender: "male"
     }
   })
-
   t.equal(response.statusCode, 201)
-  t.equal(response.json, "{id:1}")
 })
