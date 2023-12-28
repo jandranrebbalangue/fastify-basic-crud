@@ -1,4 +1,10 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify"
+import {
+  FastifyBaseLogger,
+  FastifyInstance,
+  RawReplyDefaultExpression,
+  RawRequestDefaultExpression,
+  RawServerDefault
+} from "fastify"
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox"
 import { Type } from "@sinclair/typebox"
 import {
@@ -9,16 +15,16 @@ import {
 } from "./repository"
 import { NewPerson } from "./db/types"
 
-export async function pluginWithTypebox(
-  fastify: FastifyInstance,
-  _opts: FastifyPluginOptions
-): Promise<void> {
-  const provider = fastify.withTypeProvider<TypeBoxTypeProvider>()
-  provider.get("/", (_req, reply) => {
-    reply.send({ Hello: "World" })
-  })
+type FastifyTypeBox = FastifyInstance<
+  RawServerDefault,
+  RawRequestDefaultExpression<RawServerDefault>,
+  RawReplyDefaultExpression<RawServerDefault>,
+  FastifyBaseLogger,
+  TypeBoxTypeProvider
+>
 
-  provider.post(
+export async function registerRoutes(fastify: FastifyTypeBox): Promise<void> {
+  fastify.post(
     "/persons",
     {
       schema: {
@@ -51,7 +57,7 @@ export async function pluginWithTypebox(
       reply.code(201).send(person)
     }
   )
-  provider.get(
+  fastify.get(
     "/persons/:personId",
     {
       schema: {
@@ -66,7 +72,7 @@ export async function pluginWithTypebox(
       res.code(200).send({ data: person })
     }
   )
-  provider.put(
+  fastify.put(
     "/persons/:personId",
     {
       schema: {
@@ -102,7 +108,7 @@ export async function pluginWithTypebox(
     }
   )
 
-  provider.delete(
+  fastify.delete(
     "/persons/:personId",
     {
       schema: {

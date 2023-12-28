@@ -9,14 +9,6 @@ t.before(async () => {
   await db.deleteFrom("person").returningAll().executeTakeFirst()
 })
 
-test("request the '/' route", async (t) => {
-  const response = await app.inject({
-    method: "GET",
-    url: "/"
-  })
-  t.equal(response.statusCode, 200)
-})
-
 test("Person", async (t) => {
   const items: Person[] = []
   t.test("Create", async (t) => {

@@ -2,7 +2,7 @@ import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox"
 import fastify from "fastify"
 import http from "http"
 import { fastifyEnv } from "@fastify/env"
-import { pluginWithTypebox } from "./routes"
+import { registerRoutes } from "./routes"
 
 interface customRequest extends http.IncomingMessage { }
 const app = fastify<http.Server, customRequest>({
@@ -50,6 +50,6 @@ app.register(fastifyEnv, options).ready((err) => {
   if (err) console.error(err)
 })
 
-app.register(pluginWithTypebox)
+app.register(registerRoutes)
 
 export default app
