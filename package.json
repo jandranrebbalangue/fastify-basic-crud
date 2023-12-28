@@ -1,6 +1,6 @@
 {
   "name": "practice-fastify-ts",
-  "packageManager": "yarn@4.0.1",
+  "packageManager": "yarn@4.0.2",
   "scripts": {
     "dev": "tsx watch ./server.ts"
   },
