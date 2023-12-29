@@ -45,9 +45,12 @@ export async function registerRoutes(fastify: FastifyTypeBox): Promise<void> {
             })
           )
         }
+      },
+      onRequest: async (req) => {
+        await req.jwtVerify()
       }
     },
-    async (req, reply) => {
+    async (_req, reply) => {
       const persons = await getAllPerson()
       reply.code(200).send(persons)
     }
@@ -69,8 +72,8 @@ export async function registerRoutes(fastify: FastifyTypeBox): Promise<void> {
           })
         })
       },
-      onRequest: () => {
-        fastify.decorateReply("authenticate")
+      onRequest: async (req) => {
+        await req.jwtVerify()
       }
     },
     async (req, reply) => {
@@ -96,6 +99,9 @@ export async function registerRoutes(fastify: FastifyTypeBox): Promise<void> {
         params: Type.Object({
           personId: Type.Number()
         })
+      },
+      onRequest: async (req) => {
+        await req.jwtVerify()
       }
     },
     async (req, res) => {
@@ -123,6 +129,9 @@ export async function registerRoutes(fastify: FastifyTypeBox): Promise<void> {
           }),
           updatedAt: Type.String()
         })
+      },
+      onRequest: async (req) => {
+        await req.jwtVerify()
       }
     },
     async (req, res) => {
@@ -136,7 +145,7 @@ export async function registerRoutes(fastify: FastifyTypeBox): Promise<void> {
         gender: Gender,
         updated_at: updatedAt
       })
-      res.code(204).send()
+      res.code(204)
     }
   )
 
@@ -147,12 +156,15 @@ export async function registerRoutes(fastify: FastifyTypeBox): Promise<void> {
         params: Type.Object({
           personId: Type.Number()
         })
+      },
+      onRequest: async (req) => {
+        await req.jwtVerify()
       }
     },
     async (req, res) => {
       const { personId } = req.params
       await deletePerson(personId)
-      res.code(204).send()
+      res.code(204)
     }
   )
 }

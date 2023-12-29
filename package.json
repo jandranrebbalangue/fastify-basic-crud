@@ -32,7 +32,6 @@
     "@fastify/postgres": "^5.2.2",
     "@fastify/type-provider-typebox": "^3.5.0",
     "fastify": "^4.25.2",
-    "fastify-plugin": "^4.5.1",
     "kysely": "^0.26.3",
     "pg": "^8.11.3"
   }

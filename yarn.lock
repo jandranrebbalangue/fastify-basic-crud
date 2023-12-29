@@ -2651,7 +2651,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify-plugin@npm:^4.0.0, fastify-plugin@npm:^4.5.1":
+"fastify-plugin@npm:^4.0.0":
   version: 4.5.1
   resolution: "fastify-plugin@npm:4.5.1"
   checksum: f58f79cd9d3c88fd7f79a3270276c6339fc57bbe72ef14d20b73779193c404e317ac18e8eae2c5071b3909ebee45d7eb6871da4e65464ac64ed0d9746b4e9b9f
@@ -4712,7 +4712,6 @@ __metadata:
     eslint-plugin-n: "npm:^15.0.0 || ^16.0.0 "
     eslint-plugin-promise: "npm:^6.0.0"
     fastify: "npm:^4.25.2"
-    fastify-plugin: "npm:^4.5.1"
     kysely: "npm:^0.26.3"
     kysely-codegen: "npm:^0.11.0"
     pg: "npm:^8.11.3"

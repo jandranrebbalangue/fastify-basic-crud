@@ -4,31 +4,19 @@ import { registerRoutes } from "./routes"
 import fastifyJwt from "@fastify/jwt"
 import { Type } from "@sinclair/typebox"
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox"
-import fastifyPlugin from "fastify-plugin"
-
-declare module "fastify" {
-  interface FastifyInstance {
-    config: {
-      DATABASE_URL: string
-      POSTGRES_USER: string
-      POSTGRES_HOST: string
-      POSTGRES_PASSWORD: string
-      POSTGRES_DB: string
-      POSTGRES_PORT: number
-    }
-  }
-}
+import dotenv from "dotenv"
+dotenv.config()
 
 const app = fastify<http.Server, http.IncomingMessage>({
   logger: true
 }).withTypeProvider<TypeBoxTypeProvider>()
 
 app.register(fastifyJwt, {
-  secret: "supersecret"
+  secret: process.env.JWT_SECRET as string
 })
 
 app.post(
-  "/signup",
+  "/auth",
   {
     schema: {
       body: Type.Object({
@@ -45,18 +33,6 @@ app.post(
   }
 )
 
-/* app.addHook("onRequest", async (req, reply) => { */
-/*   try { */
-/*     await req.jwtVerify() */
-/*   } catch (error) { */
-/*     reply.send(error) */
-/*   } */
-/* }) */
-fastifyPlugin(async (fp) => {
-  fp.decorate("authenticate", () => {
-    return app.jwt.options.verify
-  })
-})
 app.register(registerRoutes)
 
 export default app
