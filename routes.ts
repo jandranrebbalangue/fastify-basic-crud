@@ -8,6 +8,7 @@ import {
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox"
 import { Type } from "@sinclair/typebox"
 import {
+  getAllPerson,
   createPerson,
   deletePerson,
   findPersonById,
@@ -24,6 +25,34 @@ type FastifyTypeBox = FastifyInstance<
 >
 
 export async function registerRoutes(fastify: FastifyTypeBox): Promise<void> {
+  fastify.get(
+    "/persons",
+    {
+      schema: {
+        response: {
+          200: Type.Array(
+            Type.Object({
+              id: Type.Number(),
+              first_name: Type.String(),
+              last_name: Type.String(),
+              age: Type.Number(),
+              email: Type.String(),
+              gender: Type.Enum({
+                male: "male",
+                woman: "woman",
+                other: "other"
+              })
+            })
+          )
+        }
+      }
+    },
+    async (req, reply) => {
+      const persons = await getAllPerson()
+      reply.code(200).send(persons)
+    }
+  )
+
   fastify.post(
     "/persons",
     {
@@ -39,6 +68,9 @@ export async function registerRoutes(fastify: FastifyTypeBox): Promise<void> {
             other: "other"
           })
         })
+      },
+      onRequest: () => {
+        fastify.decorateReply("authenticate")
       }
     },
     async (req, reply) => {

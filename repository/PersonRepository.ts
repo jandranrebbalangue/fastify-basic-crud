@@ -61,3 +61,6 @@ export async function deletePerson(id: number) {
     .returningAll()
     .executeTakeFirst()
 }
+export async function getAllPerson() {
+  return await db.selectFrom("person").selectAll().execute()
+}
