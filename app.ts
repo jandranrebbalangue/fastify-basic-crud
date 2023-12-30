@@ -1,10 +1,10 @@
 import fastify from "fastify"
 import http from "http"
-import { registerRoutes } from "./routes"
 import fastifyJwt from "@fastify/jwt"
 import { Type } from "@sinclair/typebox"
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox"
 import dotenv from "dotenv"
+import { Persons } from "./routes/persons"
 dotenv.config()
 
 const app = fastify<http.Server, http.IncomingMessage>({
@@ -33,6 +33,6 @@ app.post(
   }
 )
 
-app.register(registerRoutes)
+app.register(Persons)
 
 export default app

@@ -13,8 +13,8 @@ import {
   deletePerson,
   findPersonById,
   updatePerson
-} from "./repository"
-import { NewPerson } from "./db/types"
+} from "../repository"
+import { NewPerson } from "../db/types"
 
 type FastifyTypeBox = FastifyInstance<
   RawServerDefault,
@@ -24,7 +24,7 @@ type FastifyTypeBox = FastifyInstance<
   TypeBoxTypeProvider
 >
 
-export async function registerRoutes(fastify: FastifyTypeBox): Promise<void> {
+export async function Persons(fastify: FastifyTypeBox): Promise<void> {
   fastify.get(
     "/persons",
     {
