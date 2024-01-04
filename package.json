@@ -3,7 +3,7 @@
   "packageManager": "yarn@4.0.1",
   "scripts": {
     "dev": "tsx watch ./server.ts",
-    "start:db": " docker-compose -p postgres up -d",
+    "start:db": "docker-compose -p postgres up -d",
     "test": "tap --reporter=list",
     "db:generate": "kysely-codegen"
   },
