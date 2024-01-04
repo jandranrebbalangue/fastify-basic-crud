@@ -21,6 +21,7 @@ t.before(async () => {
 
 t.after(() => {
   token = ""
+  app.close()
 })
 
 test("Person", async (t) => {
