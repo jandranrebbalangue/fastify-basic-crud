@@ -52,7 +52,7 @@ export async function Persons(fastify: FastifyTypeBox): Promise<void> {
     },
     async (_req, reply) => {
       const persons = await getAllPerson()
-      reply.code(200).send(persons)
+      await reply.code(200).send(persons)
     }
   )
 
@@ -89,7 +89,7 @@ export async function Persons(fastify: FastifyTypeBox): Promise<void> {
       }
 
       const person = await createPerson(data)
-      reply.code(201).send(person)
+      await reply.code(201).send(person)
     }
   )
   fastify.get(
@@ -107,7 +107,7 @@ export async function Persons(fastify: FastifyTypeBox): Promise<void> {
     async (req, res) => {
       const { personId } = req.params
       const person = await findPersonById(personId)
-      res.code(200).send({ data: person })
+      await res.code(200).send({ data: person })
     }
   )
   fastify.put(
@@ -145,7 +145,7 @@ export async function Persons(fastify: FastifyTypeBox): Promise<void> {
         gender: Gender,
         updated_at: updatedAt
       })
-      res.code(204)
+      await res.code(204)
     }
   )
 
@@ -164,7 +164,7 @@ export async function Persons(fastify: FastifyTypeBox): Promise<void> {
     async (req, res) => {
       const { personId } = req.params
       await deletePerson(personId)
-      res.code(204)
+      await res.code(204)
     }
   )
 }
