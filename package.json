@@ -5,7 +5,9 @@
     "dev": "tsx watch ./server.ts",
     "start:db": "docker-compose -p postgres up -d",
     "test": "tap --reporter=list",
-    "db:generate": "kysely-codegen"
+    "db:generate": "kysely-codegen",
+    "start": "node dist/server.js",
+    "build": "tsc --build --clean && tsc"
   },
   "devDependencies": {
     "@sinclair/typebox": "^0.32.3",
