@@ -126,8 +126,7 @@ export async function Persons(fastify: FastifyTypeBox): Promise<void> {
             male: "male",
             woman: "woman",
             other: "other"
-          }),
-          updatedAt: Type.String()
+          })
         })
       },
       onRequest: async (req) => {
@@ -136,7 +135,8 @@ export async function Persons(fastify: FastifyTypeBox): Promise<void> {
     },
     async (req, res) => {
       const { personId } = req.params
-      const { FirstName, LastName, Age, Email, Gender, updatedAt } = req.body
+      const { FirstName, LastName, Age, Email, Gender } = req.body
+      const updatedAt = new Date().toISOString()
       await updatePerson(personId, {
         first_name: FirstName,
         last_name: LastName,
@@ -145,7 +145,7 @@ export async function Persons(fastify: FastifyTypeBox): Promise<void> {
         gender: Gender,
         updated_at: updatedAt
       })
-      await res.code(204)
+      res.code(204)
     }
   )
 
@@ -164,7 +164,7 @@ export async function Persons(fastify: FastifyTypeBox): Promise<void> {
     async (req, res) => {
       const { personId } = req.params
       await deletePerson(personId)
-      await res.code(204)
+      res.code(204)
     }
   )
 }
